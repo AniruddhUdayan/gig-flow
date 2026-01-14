@@ -15,17 +15,23 @@ import bidRoutes from './routes/bidRoutes';
 const app: Application = express();
 const server = http.createServer(app);
 
+// Allowed origins for CORS
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://gig-flow-gusp.vercel.app'
+];
+
 // Socket.io setup with proper typing
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: allowedOrigins,
     credentials: true
   }
 });
 
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: allowedOrigins,
   credentials: true
 }));
 app.use(express.json());
