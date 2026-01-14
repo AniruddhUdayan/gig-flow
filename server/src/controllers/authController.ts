@@ -24,8 +24,8 @@ export const register = async (req: AuthRequest, res: Response): Promise<void> =
     // Set HttpOnly cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true,
+      sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 
@@ -66,8 +66,8 @@ export const login = async (req: AuthRequest, res: Response): Promise<void> => {
     // Set HttpOnly cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true,
+      sameSite: 'none',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
 
@@ -87,6 +87,8 @@ export const login = async (req: AuthRequest, res: Response): Promise<void> => {
 export const logout = (req: AuthRequest, res: Response): void => {
   res.cookie('token', '', {
     httpOnly: true,
+    secure: true,
+    sameSite: 'none',
     expires: new Date(0)
   });
   res.json({ message: 'Logged out successfully' });
